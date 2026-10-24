@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* MOBILE_UI_DETECT 2026-10-24: 画面幅でスマホ判定（PC版指定時は除外） */(function(){var H=document.documentElement,m=false;try{m=window.matchMedia('(max-width: 768px)').matches;}catch(e){}var f=false;try{f=localStorage.getItem('mm_force_pc')==='1';}catch(e){}if(m&&!f)H.classList.add('mm');else if(m&&f)H.classList.add('mm-pc');})();</script>
 <title>Oasis 航空宇宙サプライヤーマップ v3｜マスター1667社｜地図表示1573社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -8701,6 +8702,97 @@ window._woRefreshIfOpen = function(){
   <div id="quake-list"></div>
   <div style="font-size:10px;margin-top:4px;color:#aaa">60秒ごとに自動更新 | P2P地震情報</div>
 </div>
+
+<!-- ===== MOBILE_UI BEGIN 2026-10-24: スマホ時のみ自動で切替（html.mm）。PCの表示・ロジックは不変 ===== -->
+<style>
+html.mm,html.mm body{width:100%;max-width:100vw;overflow:hidden}
+html.mm header,html.mm #beta-banner,html.mm #beta-footer,html.mm #tutorial-overlay,html.mm #map-legend,html.mm #selection-open-btn,html.mm #selection-panel,html.mm #hover-popup,html.mm #wo-fab,html.mm .corner{display:none!important}
+html.mm .layout{position:static;display:block}html.mm.mm-drawer .leaflet-popup{display:none}
+html.mm .map-wrap{position:fixed;inset:0;z-index:1}
+html.mm .filter-panel{position:fixed;left:0;right:0;bottom:0;top:auto;width:100%!important;height:80vh;z-index:1200;border-right:none;border-top:1px solid var(--border);border-radius:16px 16px 0 0;transform:translateY(105%);transition:transform .25s ease;box-shadow:0 -10px 30px rgba(0,0,0,.5);padding-bottom:58px}
+html.mm.mm-filter .filter-panel{transform:none}
+html.mm .fp-head{padding-top:18px;position:relative}
+html.mm .fp-head::before{content:'';position:absolute;top:7px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:#33445c}
+html.mm .drawer{position:fixed!important;left:0!important;right:0!important;top:auto!important;bottom:0!important;width:100%!important;height:74vh;z-index:1300;border-left:none;border-top:1px solid var(--border);border-radius:16px 16px 0 0;transform:translateY(105%);box-shadow:0 -10px 30px rgba(0,0,0,.5)}
+html.mm .drawer.open{transform:none}
+html.mm #drawer-backdrop{display:none!important}
+html.mm #wo-panel{left:0!important;right:0!important;top:0!important;bottom:58px!important;width:auto!important;max-height:none!important;border-radius:0!important;z-index:1250!important}
+html.mm #wo-tab-c,html.mm #wo-tab-d,html.mm #wo-big,html.mm #wo-csv{display:none!important}
+html.mm .pw-box{width:92vw}
+html.mm .pw-title{letter-spacing:2px!important;font-size:34px!important}
+html.mm .pw-sub,html.mm .pw-logo{letter-spacing:1px!important}
+#mm-top,#mm-nav,#mm-backdrop,#mm-pcback{display:none}
+html.mm #mm-top{display:block;position:fixed;top:0;left:0;right:0;z-index:1100;padding:8px 10px 6px;background:linear-gradient(var(--bg) 75%,rgba(10,15,26,0))}
+#mm-top .mm-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+#mm-top .mm-brand{font-size:12px;letter-spacing:.15em;color:var(--muted)}
+#mm-top .mm-brand b{color:var(--accent);letter-spacing:.05em}
+#mm-top .mm-count{font-size:11px;color:var(--muted)}
+#mm-top .mm-row2{display:flex;gap:6px}
+#mm-q{flex:1;min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:10px;color:var(--text);padding:10px;font-size:16px}
+.mm-btn{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;white-space:nowrap}
+html.mm #mm-nav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:1400;background:var(--panel);border-top:1px solid var(--border);padding:6px 4px calc(8px + env(safe-area-inset-bottom))}
+#mm-nav button{flex:1;background:none;border:none;color:var(--muted);font-size:10px;padding:4px 0}
+#mm-nav button i{display:block;font-style:normal;font-size:17px;margin-bottom:1px}
+#mm-nav button.on{color:var(--accent)}
+html.mm.mm-filter #mm-backdrop,html.mm.mm-drawer #mm-backdrop{display:block;position:fixed;inset:0;z-index:1150;background:rgba(0,0,0,.35)}
+#mm-wo-note{display:none}
+html.mm #mm-wo-note{display:block;margin:8px 0;font-size:12px;color:var(--muted);line-height:1.6}
+html.mm #mm-wo-note a{color:var(--accent)}
+html.mm-pc #mm-pcback{display:block;position:fixed;right:10px;bottom:10px;z-index:9500;background:#0d1b2a;color:var(--accent);border:1px solid var(--accent);border-radius:18px;padding:8px 12px;font-size:12px}
+</style>
+<div id="mm-top">
+  <div class="mm-row1"><div class="mm-brand">メーカー<b>マップ</b> β</div><div class="mm-count">表示 <span id="mm-count">-</span>社 ・ <a href="#" id="mm-topc" style="color:var(--muted)">PC版で見る</a></div></div>
+  <div class="mm-row2"><input id="mm-q" type="search" placeholder="社名・設備名で検索（例：5軸）" autocomplete="off"><button class="mm-btn" id="mm-filter-btn">絞込</button></div>
+</div>
+<div id="mm-backdrop"></div>
+<nav id="mm-nav">
+  <button id="mm-n-map" class="on"><i>◎</i>地図</button>
+  <button id="mm-n-list"><i>≡</i>一覧</button>
+  <button id="mm-n-wo"><i>⌕</i>寸法で探す</button>
+  <button id="mm-n-acct"><i>☺</i><span id="mm-acct-lab">ログイン</span></button>
+</nav>
+<button id="mm-pcback">スマホ表示に戻す</button>
+<script>
+(function(){
+  var H=document.documentElement, LS='mm_force_pc';
+  function q(id){return document.getElementById(id);}
+  function setNav(id){['mm-n-map','mm-n-list','mm-n-wo','mm-n-acct'].forEach(function(k){var b=q(k);if(b)b.classList.toggle('on',k===id);});}
+  function invalidate(){try{if(typeof map!=='undefined'&&map&&map.invalidateSize)setTimeout(function(){map.invalidateSize();},80);}catch(e){}}
+  function closeAll(){H.classList.remove('mm-filter','mm-drawer');var w=q('wo-panel');if(w&&w.style.display!=='none'&&H.classList.contains('mm'))w.style.display='none';try{if(typeof closeDrawer==='function'&&q('drawer')&&q('drawer').classList.contains('open'))closeDrawer();}catch(e){}setNav('mm-n-map');}
+  function openFilter(tab){closeAll();try{if(typeof showFpTab==='function')showFpTab(tab||'filter');}catch(e){}H.classList.add('mm-filter');setNav(tab==='list'?'mm-n-list':'mm-n-map');}
+  /* PC表示に切替（スマホでPC版を見たい場合） */
+  function forcePC(on){try{if(on)localStorage.setItem(LS,'1');else localStorage.removeItem(LS);}catch(e){}location.reload();}
+  if(H.classList.contains('mm-pc')){var vp=document.querySelector('meta[name=viewport]');if(vp)vp.setAttribute('content','width=1280');}
+  q('mm-pcback').onclick=function(){forcePC(false);};
+  q('mm-topc').onclick=function(e){e.preventDefault();forcePC(true);};
+  if(!H.classList.contains('mm'))return;
+  /* 検索：既存の q-search に委譲 */
+  var qs=q('q-search'),mq=q('mm-q');
+  if(qs&&mq){mq.addEventListener('input',function(){qs.value=mq.value;try{onSearchInput();}catch(e){}});}
+  q('mm-filter-btn').onclick=function(){openFilter('filter');};
+  q('mm-backdrop').onclick=closeAll;
+  q('mm-n-map').onclick=closeAll;
+  q('mm-n-list').onclick=function(){openFilter('list');};
+  q('mm-n-wo').onclick=function(){closeAll();var w=q('wo-panel');if(!w)return;w.style.display='block';try{if(typeof setMode==='function')setMode('a');}catch(e){}setNav('mm-n-wo');try{if(typeof applyFilters==='function')applyFilters();}catch(e){}};
+  q('mm-n-acct').onclick=function(){if(typeof isUnlocked!=='undefined'&&isUnlocked){if(confirmLogout())try{_logout();}catch(e){}}else{try{unlockPrompt();}catch(e){}}};
+  function confirmLogout(){var b=q('mm-acct-lab');if(b&&b.dataset.armed==='1'){return true;}if(b){b.dataset.armed='1';b.textContent='もう一度で退出';setTimeout(function(){b.dataset.armed='';syncAcct();},3000);}return false;}
+  function syncAcct(){var b=q('mm-acct-lab');if(!b||b.dataset.armed==='1')return;b.textContent=(typeof isUnlocked!=='undefined'&&isUnlocked)?'ログイン中':'ログイン';}
+  setInterval(syncAcct,1500);
+  /* 件数表示を同期 */
+  var sc=q('shown-count'),mc=q('mm-count');
+  function syncCount(){if(sc&&mc)mc.textContent=sc.textContent;}
+  if(sc){syncCount();try{new MutationObserver(syncCount).observe(sc,{childList:true,characterData:true,subtree:true});}catch(e){}}
+  /* ドロワー：開いたらシート化、他のシートは閉じる */
+  if(typeof openDrawer==='function'){var _od=openDrawer;window.openDrawer=function(){H.classList.remove('mm-filter');var w=q('wo-panel');if(w)w.style.display='none';var r=_od.apply(this,arguments);H.classList.add('mm-drawer');return r;};}
+  if(typeof closeDrawer==='function'){var _cd=closeDrawer;window.closeDrawer=function(){H.classList.remove('mm-drawer');return _cd.apply(this,arguments);};}
+  /* 寸法パネルに注記（工程を組む・表面処理はPC版） */
+  var wp=q('wo-panel');if(wp){var n=document.createElement('div');n.id='mm-wo-note';n.innerHTML='「工程を組む」「表面処理でしぼる」はPC版でご利用いただけます（<a href="#" id="mm-wo-pc">PC版で見る</a>）。';var bar=wp.querySelector('.wo-bar');if(bar&&bar.parentNode)bar.parentNode.insertBefore(n,bar.nextSibling);else wp.insertBefore(n,wp.firstChild);var l=q('mm-wo-pc');if(l)l.onclick=function(e){e.preventDefault();forcePC(true);};var wc=q('wo-close');if(wc)wc.addEventListener('click',function(){setNav('mm-n-map');});}
+  /* チュートリアルはスマホでは出さない */
+  if(typeof startTutorial==='function'){window.startTutorial=function(){};}
+  invalidate();window.addEventListener('resize',invalidate);
+})();
+</script>
+<!-- ===== MOBILE_UI END ===== -->
 
 <!-- ===== 匿名PV/UVビーコン v2(流入元付き) (Supabase pageviews) ／ </body> 直前に挿入 ===== -->
 <script>
