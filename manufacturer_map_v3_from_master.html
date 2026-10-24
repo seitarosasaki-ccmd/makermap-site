@@ -6,8 +6,8 @@
 <title>Oasis 航空宇宙サプライヤーマップ v3｜マスター1667社｜地図表示1573社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
 :root {
   --bg:#0a0e1a; --panel:#0f1628; --panel2:#131d32;
@@ -1171,7 +1171,7 @@ details[open] .add-sec-head::before{transform:rotate(90deg)}
 #map[data-zl="xl"] .leaflet-div-icon>svg{transform:scale(1.0);transform-origin:center bottom}
 mark{background:#ffe066;color:#1a1200;border-radius:2px;padding:0 1px;font-style:normal;}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js" integrity="sha384-TcHRA3zBbn+Lexh5n+Oil4guNPOS3rjNDpGRAN46u/s/mB2IZ50ceC6TYDU2yvgK" crossorigin="anonymous"></script>
 <script>
 const _SB_URL='https://rvmdfzjnzaxtuzkfsids.supabase.co';
 const _SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2bWRmempuemF4dHV6a2ZzaWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4MDUwMTYsImV4cCI6MjA5NjM4MTAxNn0.i8IC7uN-0g7F2j1svELGVKr-ah-xcQlftBofMV_JnNY';
@@ -1187,7 +1187,7 @@ const _sb=window.supabase?supabase.createClient(_SB_URL,_SB_KEY):null;
     <div class="pw-title">メーカー<span>マップ</span></div>
     <div class="pw-sub">メールで登録すると全機能を利用できます（無料）</div>
     <div class="beta-badge" style="display:inline-block;background:rgba(0,212,255,.12);border:1px solid #00d4ff;color:#00d4ff;font-size:10px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;padding:3px 12px;border-radius:3px;margin:8px 0 4px;">β VERSION — 試験運用中</div>
-    <div style="text-align:center;margin-top:6px;"><a href="guide.html" target="_blank" style="color:#2dd4aa;font-size:12px;text-decoration:none;opacity:.8;">📖 使い方ガイド</a></div>
+    <div style="text-align:center;margin-top:6px;"><a href="guide.html" target="_blank" rel="noopener" style="color:#2dd4aa;font-size:12px;text-decoration:none;opacity:.8;">📖 使い方ガイド</a></div>
     <div id="pw-form">
       <div id="pw-step-email">
         <div class="pw-field">
@@ -3491,8 +3491,8 @@ function buildPopupHtml(c) {
   const eqText = c.equipText ? `<div style="margin:6px 0;padding:6px 0;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.6">${c.equipText}</div>` : '';
   const eqCount = (c.equipCount||0) > 0 ? `<span style="color:var(--accent)">設備${c.equipCount}件</span>` : '';
   const links = [];
-  if (c.hp) links.push(`<a href="${c.hp}" target="_blank" style="color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:10px;padding:2px 8px;border:1px solid rgba(0,212,255,.3);border-radius:2px;text-decoration:none">🌐 HP</a>`);
-  if (c.ep) links.push(`<a href="${c.ep}" target="_blank" style="color:#39ff14;font-family:'Share Tech Mono',monospace;font-size:10px;padding:2px 8px;border:1px solid rgba(57,255,20,.3);border-radius:2px;text-decoration:none">🔧 設備</a>`);
+  if (c.hp) links.push(`<a href="${_safeUrl(c.hp)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:10px;padding:2px 8px;border:1px solid rgba(0,212,255,.3);border-radius:2px;text-decoration:none">🌐 HP</a>`);
+  if (c.ep) links.push(`<a href="${_safeUrl(c.ep)}" target="_blank" rel="noopener noreferrer" style="color:#39ff14;font-family:'Share Tech Mono',monospace;font-size:10px;padding:2px 8px;border:1px solid rgba(57,255,20,.3);border-radius:2px;text-decoration:none">🔧 設備</a>`);
   const linksHtml = links.length ? `<div style="display:flex;gap:8px;margin-top:8px">${links.join('')}</div>` : '';
   return `<div style="min-width:240px">
     <div style="font-weight:700;font-size:14px;color:var(--accent);margin-bottom:4px">${c.name.replace('\\n',' ')}${catTag}${webBadge}</div>
@@ -4743,12 +4743,12 @@ function openDrawer(origIdx){
   renderDrawer(c);
   // Supabase lazy fetch: 認証済みの場合のみ深掘りデータを取得して再描画
   if(isUnlocked&&_sb&&c.oin){
-    var _sbOin=String(c.oin).replace(/\.0+$/,'');
+    var _sbOin=_sbMid(c.oin); /* 2026-10-24: Supabase照会キーはMID（公開はc.oin=MIDのまま） */
     var _sbIdx=origIdx;
     if(_sbUser){_sb.from('user_activity').insert({user_id:_sbUser.id,oin:_sbOin,action:'drawer_open'}).then(function(){});}
     Promise.all([
-      _sb.from('companies_detail').select('*').eq('mid',_sbOin).maybeSingle(),
-      _sb.from('equip_devices').select('*').eq('mid',_sbOin).order('proc')
+      _sb.from('companies_detail').select('mid,hp,max_x,max_y,max_z,equip_text,vendor_text,material_text,shape_text,research_json,precision_json,we_machines,we_raw,note,surface_json').eq('mid',_sbOin).maybeSingle(),
+      _sb.from('equip_devices').select('id,mid,proc,maker,model,count,shape,x,y,z,dia,len,materials,note,conf,src').eq('mid',_sbOin).order('proc')
     ]).then(function(results){
       var dr=results[0],er=results[1];
       if(dr&&dr.data){var d=dr.data;
@@ -7407,6 +7407,9 @@ function toggleQuakeMode() {
 // ================================================================
 var SURF2_BY_MID = {};  // 表面処理v2(companies_detail.surface_json・認証時)
 var IS_PUBLIC_BUILD=true; /* generate_betaで公開はtrueに反転 */
+var _OIN2MID=null,_MID2OIN=null;var _oinMapReady=Promise.resolve();
+function _sbMid(o){o=String(o).replace(/\.0+$/,'');if(IS_PUBLIC_BUILD)return o;return (_OIN2MID&&_OIN2MID[o])||'__unmapped__';}
+function _sbOinOf(m){if(IS_PUBLIC_BUILD||!_MID2OIN)return m;return _MID2OIN[m]||m;}
 var EQUIP_DEV_BY_OIN = {};  // 機種別構造化設備データ（equip_devices_by_oin.json）
 fetch('./manufacturers_slim.json')
   .then(r => { if(!r.ok) throw new Error('manufacturers_slim.json HTTP ' + r.status); return r.json(); })
@@ -7633,7 +7636,8 @@ var aShape='角',aDim={X:300,Y:200,Z:150,D:120,L:400},aLast=null,aMat='不問',a
 var cPick=['フライス加工','5軸マシニング加工'],cProc=null;
 var C_PHASE={'鍛造':'一次成形','鋳造':'一次成形','プレス成形':'一次成形','曲げ加工':'一次成形','転造':'一次成形','圧造':'一次成形','へら絞り・スピニング':'一次成形','ブランク加工':'一次成形','フライス加工':'荒加工','マシニング加工':'仕上加工','5軸マシニング加工':'仕上加工','NC旋盤':'仕上加工','複合旋盤':'仕上加工','研削':'仕上加工','ブローチ加工':'仕上加工','ガンドリル':'仕上加工','BTA加工':'仕上加工','真空熱処理':'熱処理','焼入焼戻':'熱処理','時効処理':'熱処理','析出硬化処理':'熱処理','化成処理':'表面処理','塗装':'表面処理','溶射':'表面処理','アノダイズ処理':'表面処理','陽極酸化処理':'表面処理','めっき':'表面処理','ショットピーニング':'表面処理','パシベート処理':'表面処理','黒色酸化処理':'表面処理','パーカー処理':'表面処理','浸透探傷検査(FPI)':'検査(探傷)','磁粉探傷検査(MPI)':'検査(探傷)','寸法検査(三次元測定)':'検査(探傷)'};
 
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function _safeUrl(u){u=String(u||'').trim();if(!/^https?:\/\//i.test(u))return '#';return u.replace(/"/g,'%22').replace(/'/g,'%27').replace(/</g,'%3C').replace(/>/g,'%3E');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function pcount(w){var d=PI&&PI[w];return d?(d.count||(d.makers?d.makers.length:0)):0;}
 function normOin(o){return String(o).replace(/\.0+$/,'');}
 function pmakers(w){var d=PI&&PI[w];return d&&d.makers?d.makers.map(function(m){return {oin:normOin(m.oin),name:m.name};}):[];}
@@ -7657,7 +7661,7 @@ function setMode(m){
 
 /* ===== 表面処理マッチング(タブd) 2026-06-21 ===== */
 var SURF_ROWS=null, SURF_STATE='idle', _surfCbs=[], _sfStyleDone=false, sfMode=1, sfPreset=null;
-var _SK='mid'; /* generate_beta: 公開は 'mid' に差替(c.oin=MID) */
+var _SK='mid'; /* 2026-10-24: 常にmidで照会。adminは_sbOinOfでOINへ戻す */
 var SF_PROC=[['plate','めっき'],['anod','陽極酸化/アルマイト'],['conv','化成処理/クロメート'],['passiv','不動態化/パッシベート'],['paint','塗装'],['spray','溶射'],['heat','熱処理'],['peen','ショットピーニング']];
 var SF_PROC_RE={plate:/めっき|鍍金|めつき/,anod:/アルマイト|陽極|アノダイズ|BSAA/,conv:/化成|クロメート|アロジン|SurTec/,passiv:/不動態|パッシベ|パシベ|パッシベート/,paint:/塗装/,spray:/溶射|HVOF|プラズマ|SermeTel|コーティング/,heat:/熱処理|焼入|焼戻|浸炭|窒化|時効|固溶|焼鈍|焼準|HIP|CIP|真空炉|ろう付|拡散接合|析出硬化|サブゼロ/,peen:/ピーニング/};
 var SF_NAD={plate:'cp',anod:'cp',conv:'cp',passiv:'cp',paint:'coat',spray:'coat',heat:'ht',peen:'se'};
@@ -7740,11 +7744,11 @@ function loadSurf(cb){
  if(SURF_STATE==='loading'){if(cb)_surfCbs.push(cb);return;}
  if(typeof _sb==='undefined'||!_sb||typeof isUnlocked==='undefined'||!isUnlocked){SURF_STATE='noauth';cb&&cb();return;}
  SURF_STATE='loading';
- _sb.from('companies_detail').select(_SK+',surface_json').not('surface_json','is',null).then(function(r){
+ (typeof _oinMapReady!=='undefined'?_oinMapReady:Promise.resolve()).then(function(){return _sb.from('companies_detail').select(_SK+',surface_json').not('surface_json','is',null);}).then(function(r){
   var rows=(r&&r.data)||[];SURF_ROWS=[];
   rows.forEach(function(row){
    var sj=row.surface_json;if(!sj||sj.exclude_candidate)return;var ce=sj.certs||{};
-   var key=normOin(row[_SK]);
+   var key=normOin(_sbOinOf(row[_SK]));
    SURF_ROWS.push({oin:key,n:sj.name||((coIdx()[key]&&coIdx()[key].c.name)||key),
     proc:sj.proc||[],mat:sj.mat_ok||[],
     cert:{cp:!!ce.nadcap_cp,coat:!!ce.nadcap_coat,ht:!!ce.nadcap_ht,se:!!ce.nadcap_se,ndt:!!ce.nadcap_ndt,boeing:!!ce.boeing,airbus:!!ce.airbus,mil:!!ce.mil,ams2750:!!ce.ams2750,jis9100:!!ce.jis9100},
