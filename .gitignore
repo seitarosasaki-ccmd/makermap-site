@@ -1,0 +1,14 @@
+_deploy_public/
+*_by_oin.json.bak*
+manufacturers.json
+oin_mid_map.json
+equip_devices_by_oin.json
+equip_text_by_oin.json
+equip_devices_by_mid.json
+equip_text_by_mid.json
+manufacturer_map_v3_admin.html
+.github_token
+.demo_pw
+bak_*
+*.bak*
+__pycache__/

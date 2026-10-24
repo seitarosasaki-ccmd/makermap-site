@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使い方ガイド｜メーカーマップ</title>
+<meta name="description" content="航空宇宙サプライヤを地図で探せる「メーカーマップ」の使い方。操作動画つきで、はじめての方にもわかるように解説します。">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;background:#f7f8fa;color:#1a2233;line-height:1.8;}
+  header{background:#12202e;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:10;}
+  header .logo{color:#fff;font-size:16px;font-weight:700;letter-spacing:1px;}
+  header .accent{color:#2dd4aa;}
+  header a.back{color:#12202e;background:#2dd4aa;text-decoration:none;font-size:13px;font-weight:700;padding:6px 14px;border-radius:999px;white-space:nowrap;}
+  .container{max-width:860px;margin:0 auto;padding:36px 20px 80px;}
+  h1{font-size:28px;font-weight:700;margin-bottom:10px;color:#12202e;}
+  .lead{color:#3b4656;font-size:15px;margin-bottom:28px;border-left:4px solid #2dd4aa;padding:2px 0 2px 14px;}
+  .updated{font-size:12px;color:#7a8696;margin-bottom:28px;}
+  section{margin-bottom:56px;scroll-margin-top:72px;}
+  h2{font-size:21px;font-weight:700;color:#12202e;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #2dd4aa;display:flex;gap:10px;align-items:baseline;}
+  h2 .no{color:#1a8a6a;font-size:15px;font-weight:700;}
+  h3{font-size:16px;font-weight:700;color:#12202e;margin:26px 0 8px;padding-left:10px;border-left:4px solid #2dd4aa;}
+  p{font-size:15px;color:#2d3746;margin-bottom:12px;}
+  ul.plain,ol.plain{font-size:15px;color:#2d3746;margin:4px 0 14px 22px;}
+  ul.plain li,ol.plain li{margin-bottom:6px;}
+  strong{color:#12202e;}
+  .key{display:inline-block;font-size:13px;font-weight:700;background:#12202e;color:#2dd4aa;border-radius:5px;padding:0 8px;margin:0 2px;white-space:nowrap;line-height:1.7;}
+  .lock{display:inline-block;font-size:11px;font-weight:700;background:#fff1e0;color:#b45309;border:1px solid #f5c48a;border-radius:4px;padding:0 6px;margin-left:4px;vertical-align:2px;white-space:nowrap;}
+  .free{display:inline-block;font-size:11px;font-weight:700;background:#e3f6ef;color:#1a8a6a;border:1px solid #a7e0cb;border-radius:4px;padding:0 6px;margin-left:4px;vertical-align:2px;white-space:nowrap;}
+  .toc{background:#fff;border:1px solid #e0e4ea;border-radius:12px;padding:18px 22px;margin-bottom:44px;}
+  .toc-ttl{font-size:13px;font-weight:700;color:#12202e;margin-bottom:8px;letter-spacing:.5px;}
+  .toc ol{margin:0;padding-left:22px;columns:2;column-gap:28px;}
+  .toc li{font-size:14px;margin-bottom:6px;break-inside:avoid;}
+  .toc a{color:#12202e;text-decoration:none;border-bottom:1px solid #cfd6df;}
+  .toc a:hover{color:#1a8a6a;border-bottom-color:#2dd4aa;}
+  .quick{background:#12202e;border-radius:14px;padding:24px 22px;margin-bottom:48px;color:#e8eef5;}
+  .quick .q-ttl{color:#fff;font-size:19px;font-weight:700;margin-bottom:4px;}
+  .quick .q-sub{color:#9fb3c8;font-size:13.5px;margin-bottom:16px;}
+  .q-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+  .q-step{background:rgba(255,255,255,.05);border:1px solid rgba(45,212,170,.25);border-radius:10px;padding:14px;}
+  .q-step .n{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#2dd4aa;color:#12202e;font-weight:700;font-size:13px;align-items:center;justify-content:center;margin-bottom:6px;}
+  .q-step strong{display:block;color:#fff;font-size:14.5px;margin-bottom:2px;}
+  .q-step span{color:#a9bccf;font-size:13px;line-height:1.6;display:block;}
+  figure.vid,figure.shot{margin:18px 0 22px;border-radius:12px;overflow:hidden;background:#0d1824;border:1px solid #d4dae3;box-shadow:0 4px 14px rgba(18,32,46,.08);}
+  figure.vid video,figure.shot img{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#0d1824;}
+  figure figcaption{font-size:13px;color:#3b4656;background:#fff;padding:10px 14px;border-top:1px solid #e6eaf0;}
+  .quick figure figcaption{background:#16283a;color:#c6d4e2;border-top-color:#22384d;}
+  .steps{counter-reset:s;list-style:none;margin:6px 0 14px;}
+  .steps li{counter-increment:s;position:relative;padding:10px 12px 10px 48px;background:#fff;border:1px solid #e3e8ef;border-radius:10px;margin-bottom:8px;font-size:15px;color:#2d3746;}
+  .steps li::before{content:counter(s);position:absolute;left:12px;top:11px;width:26px;height:26px;border-radius:50%;background:#2dd4aa;color:#12202e;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+  .tip,.note{border-radius:10px;padding:12px 16px;font-size:14px;margin:14px 0;}
+  .tip{background:#ecf9f4;border:1px solid #b2e4d3;color:#165a42;}
+  .note{background:#fff8ec;border:1px solid #f3d9a8;color:#7a4b06;}
+  .tip b,.note b{color:inherit;}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;background:#fff;}
+  th{background:#12202e;color:#2dd4aa;padding:9px 12px;text-align:left;font-weight:600;white-space:nowrap;}
+  td{padding:9px 12px;border-bottom:1px solid #e8eaf0;color:#2d3746;vertical-align:top;}
+  tr:nth-child(even) td{background:#f4f6f9;}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e0e4ea;}
+  .legend{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 16px;font-size:14px;margin:8px 0 14px;}
+  .legend div{background:#fff;border:1px solid #e3e8ef;border-radius:8px;padding:8px 10px;}
+  .legend b{display:inline-flex;width:24px;height:24px;border-radius:50%;background:#2dd4aa;color:#12202e;font-size:12px;align-items:center;justify-content:center;margin-right:6px;}
+  .tiers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px;}
+  .tier{background:#fff;border:1px solid #e0e4ea;border-radius:12px;padding:18px;}
+  .tier.full{border-color:#2dd4aa;box-shadow:0 0 0 2px rgba(45,212,170,.15);}
+  .tier h4{font-size:15px;margin-bottom:8px;color:#12202e;}
+  .tier ul{font-size:14px;color:#2d3746;padding-left:18px;}
+  .tier li{margin-bottom:4px;}
+  details.faq{background:#fff;border:1px solid #e3e8ef;border-radius:10px;padding:12px 16px;margin-bottom:8px;}
+  details.faq summary{cursor:pointer;font-weight:700;font-size:15px;color:#12202e;}
+  details.faq p{margin:8px 0 0;font-size:14.5px;}
+  .back-to-top{display:inline-block;font-size:12px;color:#1a8a6a;text-decoration:none;margin-top:8px;}
+  .cta{display:inline-block;background:#2dd4aa;color:#12202e;font-weight:700;text-decoration:none;border-radius:999px;padding:10px 22px;font-size:15px;margin-top:6px;}
+  footer{background:#12202e;color:#9fb3c8;text-align:center;padding:22px;font-size:12px;}
+  footer a{color:#2dd4aa;text-decoration:none;}
+  @media (max-width:640px){
+    h1{font-size:23px;}
+    h2{font-size:19px;}
+    .toc ol{columns:1;}
+    .q-steps{grid-template-columns:1fr;}
+    .legend{grid-template-columns:1fr;}
+    .tiers{grid-template-columns:1fr;}
+    header{padding:12px 16px;}
+    .hsub{display:none;}
+    .container{padding:28px 16px 64px;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <span class="logo">メーカー<span class="accent">マップ</span><span class="hsub"> 使い方ガイド</span></span>
+  <a class="back" href="manufacturer_map_v3_from_master.html">マップを開く →</a>
+</header>
+
+<div class="container" id="top">
+  <h1>使い方ガイド</h1>
+  <p class="lead">メーカーマップは、国内の航空宇宙サプライヤ<strong>1,625社</strong>（うち JIS Q 9100 取得 1,071社）を地図の上で探せる無料ツールです。<br>「この加工、どこに頼めるだろう？」を、地域・業種・認証・寸法からしぼり込んで見つけられます。このページでは、はじめて使う方向けに、操作の動画をまじえて順番に説明します。</p>
+  <p class="updated">最終更新：2026年10月　／　掲載社数は2026年10月時点の公開データです。</p>
+
+  <nav class="toc" aria-label="目次">
+    <div class="toc-ttl">目次</div>
+    <ol>
+      <li><a href="#quick">まずは30秒で：基本の3ステップ</a></li>
+      <li><a href="#screen">画面の見方</a></li>
+      <li><a href="#search">社名・住所で探して、詳細を見る</a></li>
+      <li><a href="#distance">自社からの距離で探す</a></li>
+      <li><a href="#filter">業種・地域でしぼる</a></li>
+      <li><a href="#pick">「メーカーを選ぶ」3ステップ検索</a></li>
+      <li><a href="#selector">「メーカー選定」で発注先を比べる</a></li>
+      <li><a href="#surface">表面処理・特殊工程でしぼる</a></li>
+      <li><a href="#kakoiki">加工域マップ</a></li>
+      <li><a href="#tools">便利な機能（物流・地震・自社取引先）</a></li>
+      <li><a href="#tiers">お試しと無料登録の違い</a></li>
+      <li><a href="#faq">よくある質問</a></li>
+      <li><a href="#privacy">プライバシーポリシー</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section class="quick" id="quick">
+    <div class="q-ttl">まずは30秒で：基本の3ステップ</div>
+    <div class="q-sub">登録しなくても、すぐに使い始められます。</div>
+    <div class="q-steps">
+      <div class="q-step"><span class="n">1</span><strong>マップを開く</strong><span>入口の画面で「▶ 登録せずに見てみる」を押します。</span></div>
+      <div class="q-step"><span class="n">2</span><strong>しぼり込む</strong><span>左のパネルで社名・住所・業種・地域などを指定します。</span></div>
+      <div class="q-step"><span class="n">3</span><strong>詳細を見る</strong><span>一覧の社名か地図のピンを押すと、会社の詳細が右に開きます。</span></div>
+    </div>
+    <figure class="vid">
+      <video src="guide_media/c1.mp4" poster="guide_media/c1.jpg" controls muted playsinline loop preload="metadata"></video>
+      <figcaption>動画：入口から「登録せずに見てみる」でマップを開くまで（約15秒）</figcaption>
+    </figure>
+    <p style="color:#c6d4e2;font-size:14px;margin:0">メールアドレスで無料登録すると、設備や対応寸法などの詳しい情報も見られるようになります（<a href="#tiers" style="color:#2dd4aa">違いはこちら</a>）。</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="screen">
+    <h2><span class="no">01</span>画面の見方</h2>
+    <p>マップを開くと、次のような画面になります。番号の場所を覚えておくと、あとの説明がわかりやすくなります。</p>
+    <figure class="shot">
+      <img src="guide_media/screen.jpg" alt="メーカーマップの画面。番号で各部の位置を示している" loading="lazy">
+      <figcaption>画面の各部（社名はぼかしています）</figcaption>
+    </figure>
+    <div class="legend">
+      <div><b>1</b><strong>起点</strong>：距離をはかる基準の場所（自社や工場）</div>
+      <div><b>2</b><strong>距離ボタン</strong>：起点から50／100／200km圏・全国</div>
+      <div><b>3</b><strong>件数</strong>：いま地図に表示している会社の数</div>
+      <div><b>4</b><strong>表示切替・便利機能</strong>：東海／全国、物流、地震情報、自社取引先、加工域マップ</div>
+      <div><b>5</b><strong>メーカー選定</strong>：寸法・工程・表面処理で発注先を比較</div>
+      <div><b>6</b><strong>左パネル</strong>：「クイック絞り込み」と「メーカー一覧」のタブ</div>
+      <div><b>7</b><strong>メーカーを選ぶ</strong>：工程→設備→認証の3ステップ検索</div>
+      <div><b>8</b><strong>地図</strong>：ピンの色は業種。押すと会社の概要が出ます</div>
+    </div>
+    <div class="tip"><b>ピンの色について：</b>地図左下の凡例のとおり、業種（切削加工、組立・塗装、熱処理、表面処理など）ごとに色分けしています。</div>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 3 -->
+  <section id="search">
+    <h2><span class="no">02</span>社名・住所で探して、詳細を見る</h2>
+    <p>知っている会社を確認したいときや、「この県にどんな会社があるか」を見たいときの使い方です。</p>
+    <ol class="steps">
+      <li>左パネルの <span class="key">クイック絞り込み</span> タブを開きます。</li>
+      <li><strong>「社名・住所 検索」</strong>の欄に言葉を入れます（例：<em>岐阜</em>、会社名の一部など）。入力したそばから、地図と件数が絞り込まれます。</li>
+      <li><span class="key">メーカー一覧</span> タブに切り替えると、該当する会社が一覧で並びます。</li>
+      <li>一覧の社名を押すと、地図がその会社の場所までズームし、右側に<strong>詳細パネル</strong>が開きます。</li>
+    </ol>
+    <figure class="vid">
+      <video src="guide_media/c2.mp4" poster="guide_media/c2.jpg" controls muted playsinline loop preload="metadata"></video>
+      <figcaption>動画：住所「岐阜」で検索 → 一覧から社名を押して詳細を開く（社名はぼかしています）</figcaption>
+    </figure>
+    <h3>詳細パネルで見られること</h3>
+    <ul class="plain">
+      <li>住所、都道府県、起点からの距離と輸送の目安</li>
+      <li>工程・業種、資本金・従業員数などの会社規模</li>
+      <li>航空宇宙以外の主な事業、似た会社（類似企業）の候補</li>
+      <li>保有設備の機種・台数・対応寸法、公式サイトなど<span class="lock">無料登録で表示</span></li>
+    </ul>
+    <div class="tip"><b>ヒント：</b>詳細パネル左上の <span class="key">◀</span> で、直前に見ていた会社に戻れます。類似企業の欄から、似た会社を次々にたどることもできます。</div>
+    <h3>設備の名前で探す <span class="lock">無料登録で利用可</span></h3>
+    <p>「社名・住所 検索」の下にある<strong>「設備名称 検索」</strong>では、マシニングセンタ、旋盤、型番、設備メーカー名などで探せます。設備データは登録された方に公開しているため、お試しの状態では結果が0件になります。</p>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 4 -->
+  <section id="distance">
+    <h2><span class="no">03</span>自社からの距離で探す</h2>
+    <p>外注先は「近いこと」も大事です。起点を決めておくと、距離でしぼり込んだり、近い順に並べたりできます。</p>
+    <ol class="steps">
+      <li>画面左上の <strong>起点</strong> で、都道府県と市区町村を選びます。最初は「愛知県 小牧市」になっています。</li>
+      <li>右隣の <span class="key">50km圏</span> <span class="key">100km圏</span> <span class="key">200km圏</span> を押すと、その範囲の会社だけが表示されます。範囲は地図上に円で示されます。</li>
+      <li><span class="key">メーカー一覧</span> は起点から<strong>近い順</strong>に並び、それぞれの距離（km）も表示されます。</li>
+      <li>元に戻すときは <span class="key">全国</span> を押します。</li>
+    </ol>
+    <figure class="vid">
+      <video src="guide_media/c3.mp4" poster="guide_media/c3.jpg" controls muted playsinline loop preload="metadata"></video>
+      <figcaption>動画：起点（小牧市）から100km圏にしぼり、近い順の一覧を確認</figcaption>
+    </figure>
+    <div class="note"><b>距離について：</b>表示している距離は直線距離です。実際の道のりは、おおむね1.2〜1.4倍になります。</div>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 5 -->
+  <section id="filter">
+    <h2><span class="no">04</span>業種・地域でしぼる</h2>
+    <p><span class="key">クイック絞り込み</span> タブでは、いくつかの条件を組み合わせて表示する会社をしぼれます。</p>
+    <div class="table-wrap"><table>
+      <tr><th>項目</th><th>できること</th></tr>
+      <tr><td>業種（登録の主分類）</td><td>機械加工、表面処理、熱処理、鍛造・鋳造などのチップを押してON/OFFします。<span class="key">全ON</span> <span class="key">全OFF</span> で一括切り替え。各チップの数字は該当社数です。</td></tr>
+      <tr><td>対応工程でしぼる（暫定）</td><td>業種とは別に、各社が対応している工程でしぼります。</td></tr>
+      <tr><td>地域（都道府県）</td><td>都道府県を1つ選んで表示します。</td></tr>
+      <tr><td>起点からの距離</td><td>スライダーで、起点からの距離の上限を細かく決められます。</td></tr>
+      <tr><td>ワーク寸法でしぼる</td><td>X・Y・Z（mm）を入れて、そのワークが収まる設備を持つ会社だけにします。<span class="lock">無料登録で利用可</span></td></tr>
+    </table></div>
+    <figure class="vid">
+      <video src="guide_media/c4.mp4" poster="guide_media/c4.jpg" controls muted playsinline loop preload="metadata"></video>
+      <figcaption>動画：業種を「全OFF」にしてから、表面処理と熱処理だけを表示</figcaption>
+    </figure>
+    <div class="tip"><b>うまく絞れないときは：</b>左パネル右上の <span class="key">RESET</span> で、すべての条件を初期状態に戻せます。</div>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 6 -->
+  <section id="pick">
+    <h2><span class="no">05</span>「メーカーを選ぶ」3ステップ検索</h2>
+    <p>地図の上にある <span class="key">🔍 メーカーを選ぶ</span> を押すと、画面下に案内つきの検索が開きます。質問に答えていくだけで、条件に合う会社がしぼり込まれます。</p>
+    <ol class="steps">
+      <li><strong>STEP 1：工程カテゴリ</strong>を選びます（切削加工、熱処理、表面処理など。カテゴリごとの社数も表示されます）。</li>
+      <li><strong>STEP 2：設備・サイズのキーワード</strong>を入れます（例：1000mm、φ500、真空浸炭）。空欄のまま「次へ」で飛ばせます。<span class="lock">設備データは無料登録で利用可</span></li>
+      <li><strong>STEP 3：品質・認定条件</strong>にチェックします（Boeing承認、Airbus承認、NADCAP、AMS2750、MIL規格、JIS Q 9100）。複数選ぶと「すべて満たす会社」になります。</li>
+      <li><span class="key">この条件で探す</span> を押すと、結果が地図と一覧に表示されます。</li>
+    </ol>
+    <figure class="vid">
+      <video src="guide_media/c5.mp4" poster="guide_media/c5.jpg" controls muted playsinline loop preload="metadata"></video>
+      <figcaption>動画：切削加工 → （設備条件はスキップ） → JIS Q 9100 で検索</figcaption>
+    </figure>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 7 -->
+  <section id="selector">
+    <h2><span class="no">06</span>「メーカー選定」で発注先を比べる</h2>
+    <p>画面右上の <span class="key">メーカー選定</span> を押すと、右側に選定パネルが開きます。作りたい品物の条件から、発注先の候補を比べられます。4つのタブがあります。</p>
+    <figure class="vid">
+      <video src="guide_media/c6.mp4" poster="guide_media/c6.jpg" controls muted playsinline loop preload="metadata"></video>
+      <figcaption>動画：「寸法で探す」で判定 →「工程で探す」で工程フローと対応社数を確認</figcaption>
+    </figure>
+    <h3>A. 寸法で探す</h3>
+    <p>ワークの形（<strong>角物</strong>か<strong>丸物</strong>）を選び、寸法を入れます。角物は X・Y・Z、丸物は 径φ と 長さL（mm）です。各社の実際の設備サイズと照らし合わせて、次の記号で判定します。</p>
+    <div class="table-wrap"><table>
+      <tr><th>記号</th><th>意味</th></tr>
+      <tr><td>○ 対応可</td><td>すべての軸に10%以上の余裕をもって収まる設備がある</td></tr>
+      <tr><td>△ 要確認</td><td>収まるがギリギリ、または一部の寸法が未確認</td></tr>
+      <tr><td>✕ 非対応</td><td>収まる設備が見つからない</td></tr>
+    </table></div>
+    <p style="margin-top:12px">材料（アルミ、ステンレス、チタン、耐熱合金など）や精度の目安を選ぶと、注記がつきます。お試しの状態では近い5社まで表示され、全社の判定は無料登録で見られます。</p>
+    <h3>B. 工程で探す</h3>
+    <p>材料と形状（円筒・角・複雑・板）を選ぶと、その品物の標準的な工程の流れ（荒加工→熱処理→仕上げ→検査→表面処理など）と、工程ごとの対応社数が出ます。<strong>工程名を押すと、その工程に対応する会社が地図上で強調</strong>されます。対応社数が少ない工程（目安20社未満）は、ボトルネックとして注意表示が出ます。</p>
+    <h3>C. 工程を組む</h3>
+    <p>標準の流れにとらわれず、必要な工程を自由に選んで組み合わせます。工程は自動で順番に並び、それぞれの対応会社が表示されます。複数の工程をまとめて頼める会社を探したいときに便利です。</p>
+    <h3>D. 表面処理でしぼる <span class="lock">無料登録で利用可</span></h3>
+    <p>表面処理・特殊工程の専用タブです。くわしくは<a href="#surface">次の章</a>をご覧ください。</p>
+    <h3>どのタブでも使える機能</h3>
+    <ul class="plain">
+      <li><strong>縦リスト／マトリクス</strong>：一覧表示と、工程×会社の○✕表を切り替え</li>
+      <li><strong>大画面</strong>：パネルを画面いっぱいに広げて比較（Escで元に戻る）</li>
+      <li><strong>CSV書き出し</strong>：選定結果をCSVでダウンロード</li>
+      <li><strong>選定をリセット</strong>：条件をすべて消して最初から</li>
+    </ul>
+    <div class="note"><b>ご注意：</b>判定は公開情報をもとにした一次スクリーニングの目安です。精度や公差は、実際のワークでの保証ではありません。最終的な確認は、各社へのお問い合わせでお願いします。</div>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 8 -->
+  <section id="surface">
+    <h2><span class="no">07</span>表面処理・特殊工程でしぼる <span class="lock">無料登録で利用可</span></h2>
+    <p>めっき、陽極酸化、化成処理、不動態化、塗装、溶射、熱処理、ショットピーニングといった表面処理・特殊工程について、ワークと納め先に合う会社を判定します。<span class="key">メーカー選定</span> の <span class="key">表面処理でしぼる</span> タブから使います。</p>
+    <h3>3つの探し方</h3>
+    <ol class="steps">
+      <li><strong>スペックで探す</strong>：処理、対応材料、納め先（国内一般／海外OEM／Boeing／Airbus）を選ぶと、○推奨・△条件付・✕不適合で判定し、判定の根拠、認証、処理槽・炉のサイズを表示します。</li>
+      <li><strong>規格番号で逆引き</strong>：AMS、Boeing BAC、MIL、ASTMなどの規格番号から、対応する処理と会社を表示します（例：AMS2700→不動態化）。</li>
+      <li><strong>供給リスクを点検</strong>：処理×材料×必要な認証で対応社数を数えます。0社なら新規開拓が必要、1〜2社なら供給が途切れるリスクがあると警告します。</li>
+    </ol>
+    <h3>判定の考え方</h3>
+    <div class="table-wrap"><table>
+      <tr><th>条件</th><th>判定</th></tr>
+      <tr><td>国内一般向け</td><td>Nadcapは不要。処理と対応材料が合えば○</td></tr>
+      <tr><td>海外OEM向け</td><td>該当工程のNadcap（めっき・陽極・化成・不動態＝CP、塗装・溶射＝Coatings、熱処理＝HT、ショットピーニング＝SE）が必要。なければ✕</td></tr>
+      <tr><td>Boeing／Airbus指定</td><td>該当OEMの承認が必要</td></tr>
+      <tr><td>高張力鋼・チタン×めっき</td><td>水素脆性除去のベーキングが必要。対応が未確認なら△</td></tr>
+    </table></div>
+    <p style="margin-top:12px;font-size:14px">処理槽・炉のサイズは、公開している会社のみ表示します。この判定も一次スクリーニング用です。</p>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 9 -->
+  <section id="kakoiki">
+    <h2><span class="no">08</span>加工域マップ <span class="lock">無料登録で利用可</span></h2>
+    <p>画面上部の <span class="key">⚙ 加工域マップ</span> を押すと、いま表示している会社が持つ設備の加工範囲を、グラフに点で並べて見られます。「φ200以上の旋盤を持つ会社はどのくらいあるか」といった全体の分布をつかむのに便利です。</p>
+    <div class="table-wrap"><table>
+      <tr><th>系統</th><th>グラフの軸</th><th>対象の設備</th></tr>
+      <tr><td>加工域 X×Y</td><td>X（mm）× Y（mm）</td><td>マシニング、5軸マシニング、フライス、平面研削</td></tr>
+      <tr><td>径φ × 長さL</td><td>径φ（mm）× 長さL（mm）</td><td>NC旋盤、複合旋盤、円筒研削</td></tr>
+      <tr><td>成形能力 t</td><td>能力（t）× 長さL（mm）</td><td>プレス、曲げ、鍛造</td></tr>
+    </table></div>
+    <ul class="plain" style="margin-top:12px">
+      <li>点にマウスを乗せると、会社名と機種名が表示されます。</li>
+      <li>点を押すと、その会社の詳細パネルが開きます。</li>
+      <li>グラフの下の「プロット一覧」で、会社名・加工範囲・機種をまとめて確認できます。</li>
+    </ul>
+    <div class="tip"><b>ヒント：</b>先に業種や距離でしぼってから開くと、対象の会社だけのグラフになります。</div>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 10 -->
+  <section id="tools">
+    <h2><span class="no">09</span>便利な機能</h2>
+    <div class="table-wrap"><table>
+      <tr><th>ボタン</th><th>できること</th></tr>
+      <tr><td><span class="key">東海</span> <span class="key">全国</span></td><td>地図の表示範囲を、東海地方または全国にすばやく切り替えます。</td></tr>
+      <tr><td><span class="key">🚚 物流</span></td><td>物流分析モード。高速道路のIC、新幹線の駅、空港を地図に表示し、運びやすさの見当をつけられます。</td></tr>
+      <tr><td><span class="key">🔴 地震情報</span></td><td>最新の地震情報を地図に表示します（60秒ごとに更新）。取引先の地域で地震があったときの影響確認に使えます。</td></tr>
+      <tr><td><span class="key">🏭 自社取引先</span></td><td>自社の取引先リスト（CSV）を読み込み、地図を取引先だけにしぼります。ひな形CSVもダウンロードできます。<strong>読み込んだデータはお使いの端末の中だけで処理され、外部には送信されません。</strong></td></tr>
+      <tr><td>改善要望・誤りのご連絡</td><td>画面下のリンクから、掲載内容の誤りや機能の要望をお知らせいただけます。</td></tr>
+    </table></div>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 11 -->
+  <section id="tiers">
+    <h2><span class="no">10</span>お試しと無料登録の違い</h2>
+    <p>登録しなくても基本の機能は使えます。メールアドレスで無料登録すると、設備や寸法などの詳しいデータが見られるようになります。料金はかかりません。</p>
+    <div class="tiers">
+      <div class="tier">
+        <h4>お試し（登録なし）<span class="free">そのまま使える</span></h4>
+        <ul>
+          <li>地図・ピン表示、会社の概要</li>
+          <li>社名・住所の検索</li>
+          <li>業種・地域・距離でのしぼり込み</li>
+          <li>メーカー一覧、詳細パネル（住所・規模・事業など）</li>
+          <li>「メーカーを選ぶ」3ステップ検索</li>
+          <li>メーカー選定（寸法判定は近い5社まで、工程で探す・工程を組む）</li>
+          <li>物流・地震情報・自社取引先</li>
+        </ul>
+      </div>
+      <div class="tier full">
+        <h4>無料登録（メールアドレスのみ）</h4>
+        <ul>
+          <li>お試しのすべての機能</li>
+          <li>設備名称での検索</li>
+          <li>保有設備の機種・台数・対応寸法</li>
+          <li>ワーク寸法でのしぼり込み、寸法判定の全社表示</li>
+          <li>表面処理・特殊工程の判定</li>
+          <li>加工域マップ</li>
+          <li>公式サイトなどの詳しい情報</li>
+        </ul>
+      </div>
+    </div>
+    <h3>登録のしかた</h3>
+    <ol class="steps">
+      <li>マップの入口画面（または画面上部の <span class="key">🔓 ログイン</span>）でメールアドレスを入力し、「認証コードを送信」を押します。</li>
+      <li>届いたメールの認証コードを入力すると、すべての機能が使えるようになります。</li>
+    </ol>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 12 -->
+  <section id="faq">
+    <h2><span class="no">11</span>よくある質問</h2>
+    <details class="faq"><summary>件数が0件になってしまいました</summary><p>条件が重なりすぎている可能性があります。左パネル右上の「RESET」で条件を戻してから、1つずつ試してください。お試しの状態では、設備名称の検索や設備条件は0件になります（無料登録で使えます）。</p></details>
+    <details class="faq"><summary>スマートフォンでも使えますか？</summary><p>はい、同じ機能をスマートフォンのブラウザでもお使いいただけます。比較や表の確認は、画面の広いパソコンのほうが見やすいです。</p></details>
+    <details class="faq"><summary>掲載されている情報はどこから集めていますか？</summary><p>各社の公式サイトなど、公開されている情報をもとにしています。β版のため順次更新しており、正確さ・完全さを保証するものではありません。発注の最終判断は、各社への確認のうえで行ってください。</p></details>
+    <details class="faq"><summary>自社の情報が間違っています／載っていません</summary><p>画面下の「改善要望・誤りのご連絡はこちら」からお知らせください。確認のうえ反映します。</p></details>
+    <a class="back-to-top" href="#top">↑ 目次へ戻る</a>
+  </section>
+
+  <!-- 13 -->
+  <section id="privacy">
+    <h2><span class="no">12</span>プライバシーポリシー</h2>
+    <p>メーカーマップ（以下「本サービス」）は、ご登録いただいたメールアドレスを次の目的にのみ使用します。</p>
+    <ol class="steps">
+      <li><strong>ログイン認証</strong>：ご本人確認のため、ワンタイムパスワード（認証コード）を入力されたメールアドレスに送信します。認証が終わると、すべての機能をご利用いただけます。</li>
+      <li><strong>サービスのご案内</strong>：掲載情報の大きな更新や機能追加など、本サービスに関する重要なお知らせをお送りすることがあります。</li>
+    </ol>
+    <p>収集する情報はメールアドレスのみです。取得した情報を第三者に販売・提供することはありません。認証基盤には Supabase（Supabase, Inc.）を使用しています。情報の開示・削除をご希望の場合は、本サービスのお問い合わせ先までご連絡ください。</p>
+    <p>「自社取引先」機能で読み込んだCSVは、お使いの端末内でのみ処理され、本サービスに送信・保存されることはありません。</p>
+    <a class="cta" href="manufacturer_map_v3_from_master.html">マップを開く →</a>
+  </section>
+</div>
+
+<footer>
+  © 2026 メーカーマップ　|　<a href="manufacturer_map_v3_from_master.html">マップに戻る</a>　|　<a href="feedback.html">改善要望・誤りのご連絡</a>
+</footer>
+</body>
+</html>
