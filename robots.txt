@@ -68,3 +68,7 @@ Disallow: /work_envelope_by_oin.json
 Disallow: /cert_by_oin.json
 Disallow: /process_maker_index.json
 Disallow: /b_presets.json
+Disallow: /manufacturers_slim.json
+Disallow: /precision_by_oin.json
+Disallow: /equip_text_by_mid.json
+Disallow: /equip_devices_by_mid.json
