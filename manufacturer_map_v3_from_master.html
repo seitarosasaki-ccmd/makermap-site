@@ -7994,7 +7994,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
 
 function buildA(){
  chips('wo-a-shp',['角物','丸物'],aShape==='角'?'角物':'丸物',function(v){aShape=(v==='角物'?'角':'丸');buildA();});
- chips('wo-a-mat',['不問','アルミ','ステンレス','チタン','耐熱合金','銅系','鋼','樹脂'],aMat,function(v){aMat=v;evalA();});
+ chips('wo-a-mat',['不問','アルミ','マグネシウム','ステンレス','チタン','耐熱合金','銅系','鋼','樹脂'],aMat,function(v){aMat=v;buildA();}); /* 2026-11-12: 選択色が変わらない不具合修正(evalA→buildA)・マグネシウム追加 */
  var dh,hint;
  if(aShape==='角'){
   dh='<span style="font-size:12px;color:#9fb2c8">X</span><input class="wo-num" id="wo-X" type="text" inputmode="numeric" pattern="[0-9]*" value="'+aDim.X+'"> <span style="font-size:12px;color:#9fb2c8">Y</span><input class="wo-num" id="wo-Y" type="text" inputmode="numeric" pattern="[0-9]*" value="'+aDim.Y+'"> <span style="font-size:12px;color:#9fb2c8">Z</span><input class="wo-num" id="wo-Z" type="text" inputmode="numeric" pattern="[0-9]*" value="'+aDim.Z+'"> <span style="font-size:11px;color:#7a8aa0">mm</span>';
@@ -8011,6 +8011,7 @@ function buildA(){
 /* ③材料適合注記・④公差→設備精度tier変換 (2026-06-10) */
 var _A_MATRX={
  'アルミ':/アルミ|ジュラルミン|A[2567]0\d{2}|aluminum|aluminium/i,
+ 'マグネシウム':/マグネシウム|Mg合金|AZ31|AZ61|AZ91|AM60|ZK60|WE43|magnesium/i,
  'ステンレス':/ステンレス|SUS\d*|stainless/i,
  'チタン':/チタン|titanium|Ti-?6/i,
  '耐熱合金':/インコネル|ハステロイ|ワスパロイ|耐熱合金|超合金|Inconel|Hastelloy|Waspaloy|Ni基|ニッケル基|コバール/i,
